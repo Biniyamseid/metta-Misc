@@ -1,0 +1,18 @@
+(define (partitions lst)
+(define (partition-iter curr-part remaining)
+  (if (null? remaining)
+      (list curr-part)
+      (append (partition-iter curr-part remaining)
+              (partition-iter (cons (car remaining) curr-part) (cdr remaining)))))
+(partition-iter '() lst))
+
+(define (select lst)
+(if (null? lst)
+    '()
+    (cons (list (car lst) (cdr lst))
+          (map (lambda (split)
+                 (list (cons (car lst) (car split))
+                       (cdr split)))
+               (select (cdr lst))))))
+
+(partitions '(1 2 3))

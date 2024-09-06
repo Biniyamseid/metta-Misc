@@ -1,0 +1,21 @@
+(define (partitions lst)
+(if (null? lst)
+    '(())
+    (append (map (lambda (x) (list x))
+                 lst)
+            (apply append
+                   (map (lambda (split)
+                          (map (lambda (p) (cons (car split) p))
+                               (partitions (cdr split))))
+                        (select lst))))))
+
+(define (select lst)
+(if (null? lst)
+    '()
+    (cons (list (car lst) (cdr lst))
+          (map (lambda (split)
+                 (list (cons (car lst) (car split))
+                       (cdr split)))
+               (select (cdr lst))))))
+
+(partitions '(1 2 3))
